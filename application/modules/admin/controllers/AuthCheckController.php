@@ -1,6 +1,6 @@
 <?php
 /**
- * Authorization data verification.
+ * Authorization data verification
  *
  * @author Łukasz Jankowski <mail@lukaszjankowski.info>
  */
