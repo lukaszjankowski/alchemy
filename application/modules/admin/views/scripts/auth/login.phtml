@@ -1,0 +1,14 @@
+<script type="text/javascript" src="alchemy/js/LoginForm/LoginFormController.js">&nbsp;</script>
+<script type="text/javascript" src="alchemy/js/LoginForm/LoginFormModel.js">&nbsp;</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    var formController = Object.create(alchemy.namespace('loginForm').controller);
+    var model = Object.create(alchemy.loginForm.model);
+    formController.setModel(model);
+    formController.setView($('form'));
+    formController.attachObserver('submitForm', model);
+});
+</script>
+
+<?php echo $this->loginForm ?>

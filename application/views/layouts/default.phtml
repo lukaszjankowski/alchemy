@@ -1,0 +1,38 @@
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<?php echo $this->headTitle() ?>
+<?php echo $this->headMeta() ?>
+<?php echo $this->headlink() ?>
+<base href="<?php echo $this->baseUrl() ?>/" />
+<script type="text/javascript" src="alchemy/js/jQuery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="alchemy/js/Alchemy.js"></script>
+<script type="text/javascript" src="alchemy/js/Alchemy/Namespace.js"></script>
+<script type="text/javascript" src="alchemy/js/Alchemy/IndexOf.js"></script>
+<script type="text/javascript" src="alchemy/js/Alchemy/TypeOf.js"></script>
+<script type="text/javascript" src="alchemy/js/Alchemy/Observable.js"></script>
+<script type="text/javascript" src="alchemy/js/Alchemy/Observer.js"></script>
+<script type="text/javascript" src="alchemy/js/Alchemy/Ajax.js"></script>
+</head>
+<body>
+    <?php if(Zend_Auth::getInstance()->hasIdentity()): ?>
+    <h5>
+        Zalogowany:
+        <?php echo Zend_Auth::getInstance()->getIdentity()?>
+    </h5>
+    <a href="admin/auth/logout">Wyloguj</a>
+    <?php endif; ?>
+
+    <?php if(is_array($this->actionMessages)):
+    foreach($this->actionMessages as $message) : ?>
+    <div class="actionMessage <?php echo $message['type']?>">
+        <?php echo $message['txt'] ?>
+    </div>
+    <?php endforeach;
+    endif; ?>
+
+    <div id="mainContent">
+        <?php echo $this->layout()->content ?>
+    </div>
+</body>
+</html>
