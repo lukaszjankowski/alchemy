@@ -4,12 +4,12 @@ require_once 'Zend/Test/PHPUnit/ControllerTestCase.php';
 
 abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
 {
-    protected $application;
+    protected $appConfig;
 
     public function setUp()
     {
-        $this->bootstrap = new Zend_Application(APPLICATION_PROCEDURE,
-            WEBSITE_PATH . '/application/configs/application.ini');
+        $this->appConfig = WEBSITE_PATH . '../configsGenerated/application.ini';
+        $this->bootstrap = new Zend_Application(APPLICATION_PROCEDURE, $this->appConfig);
 
         parent::setUp();
     }
@@ -27,7 +27,7 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
         // removing this helper solves issues with multiple redirects in one test
         // a fresh instance of helper is registered anyway
         Zend_Controller_Action_HelperBroker::removeHelper('redirector');
-//         Zend_Controller_Action_HelperBroker::removeHelper('flashMessenger');
+        //         Zend_Controller_Action_HelperBroker::removeHelper('flashMessenger');
 
         parent::dispatch($url);
     }
@@ -51,11 +51,11 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
             }
         }
         $msg = sprintf('Failed asserting FlashMessanger has set message <"%s">', $flashMessage);
-        if (!empty($message)) {
+        if(!empty($message))
+        {
             $msg = $message . "\n" . $msg;
         }
         $this->fail($msg);
     }
-
 
 }

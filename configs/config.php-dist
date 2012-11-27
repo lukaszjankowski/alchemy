@@ -1,0 +1,21 @@
+<?php
+error_reporting(E_ALL);
+ini_set('error_log', '%%WEBSITE_LOG_DIR%%/' . date('Y-m-d') . '-php-error.log');
+
+define('APPLICATION_PATH', '%%APPLICATION_PATH%%');
+define('WEBSITE_PATH', '%%WEBSITE_PATH%%');
+
+set_include_path(
+    implode(PATH_SEPARATOR,
+        array_unique(
+            array_merge(
+                array(
+                    '%%LIBRARY_ZF_DIR%%',
+                    '%%APPLICATION_PATH%%',
+                ), explode(PATH_SEPARATOR, get_include_path())))));
+
+require_once '%%APPLICATION_PATH%%/configs/constants.php';
+if(!defined('APPLICATION_PROCEDURE'))
+{
+    define('APPLICATION_PROCEDURE', APPLICATION_PROCEDURE_%%APPLICATION_PROCEDURE%%);
+}

@@ -25,8 +25,7 @@ class ErrorControllerTest extends ControllerTestCase
 
     public function testBacktraceShouldBeDisplayedInDevEnv()
     {
-        $this->bootstrap = new Zend_Application('DEVELOPMENT',
-                WEBSITE_PATH . '/application/configs/application.ini');
+        $this->bootstrap = new Zend_Application('DEVELOPMENT', $this->appConfig);
         $this->bootstrap();
         $this->dispatch('/gallery/error/error500');
 
@@ -36,14 +35,12 @@ class ErrorControllerTest extends ControllerTestCase
 
     public function testBacktraceShouldNotBeDisplayedInProEnv()
     {
-        $this->bootstrap = new Zend_Application('PRODUCTION',
-                WEBSITE_PATH . '/application/configs/application.ini');
+        $this->bootstrap = new Zend_Application('PRODUCTION', $this->appConfig);
         $this->bootstrap();
         $this->dispatch('/gallery/error/error500');
 
         $this->assertNotQueryContentContains('h3', 'Exception information:');
         $this->assertNotQueryContentContains('h3', 'Stack trace:');
     }
-
 
 }

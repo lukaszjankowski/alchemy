@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<!-- Application deployment tasks -->
+<project name="deploy" default="help" basedir=".">
+
+	<property file="build.properties" />
+	<property name="website.path" value="${project.basedir}/website/" />
+
+	<target name="help">
+		<echo>Existing tasks:</echo>
+		<echo> build - run build tasks</echo>
+		<echo> reload-config - reload application configuration files</echo>
+		<echo> php-lint - check php syntax</echo>
+		<echo> unit-tests - run all application unit tests</echo>
+	</target>
+
+	<!-- Declare website configurable files -->
+	<fileset id="fileset.configurable-website" dir="${application.path}/configs/">
+		<include name="config.php-dist" />
+		<include name="application.ini-dist" />
+	</fileset>
+
+	<!-- Declare available targets -->
+
+	<target name="reload-config" description="Reload application configuration files">
+		<copy todir="configsGenerated" overwrite="true">
+			<mapper type="regexp" from="^(.*)-dist" to="\1" />
+			<fileset refid="fileset.configurable-website" />
+			<filterchain>
+				<replacetokens begintoken="%%" endtoken="%%">
+					<token key="WEBSITE_PATH" value="${website.path}" />
+					<token key="WEBSITE_BASE_URL" value="${website.base_url}" />
+					<token key="WEBSITE_LOG_DIR" value="${project.basedir}/logs" />
+					<token key="APPLICATION_PROCEDURE" value="${application.procedure}" />
+					<token key="APPLICATION_PATH" value="${application.path}" />
+					<token key="LIBRARY_ZF_DIR" value="${library.zf.dir}" />
+					<token key="ALCHEMY_DB_NAME" value="${alchemy.db.name}" />
+					<token key="ALCHEMY_DB_USER" value="${alchemy.db.user}" />
+					<token key="ALCHEMY_DB_PASS" value="${alchemy.db.pass}" />
+					<token key="ALCHEMY_DB_HOST" value="${alchemy.db.host}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+	</target>
+
+	<target name="unit-tests" description="Run unit tests">
+		<delete dir="test-reports" />
+		<mkdir dir="test-reports" />
+		<exec command="phpunit --configuration ${application.path}/tests/phpunit.xml"
+			passthru="false" />
+	</target>
+
+	<target name="php-lint" description="Check php syntax">
+		<phplint level="verbose" haltonfailure="true">
+			<fileset dir="${application.path}">
+				<include name="**/*.php" />
+			</fileset>
+		</phplint>
+	</target>
+
+	<target name="build" description="Run build tasks">
+		<phingcall target="reload-config" />
+		<phingcall target="php-lint" />
+		<phingcall target="unit-tests" />
+	</target>
+
+</project>

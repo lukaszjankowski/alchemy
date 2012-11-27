@@ -44,7 +44,7 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
         $acl->addRole(new \Zend_Acl_Role(Acl::ROLE_GUEST));
         $acl->addRole(new \Zend_Acl_Role(Acl::ROLE_AUTHENTICATED), Acl::ROLE_GUEST);
 
-        $aclConfig = new \Zend_Config_Ini(WEBSITE_PATH . '/application/configs/acl.ini');
+        $aclConfig = new \Zend_Config_Ini(APPLICATION_PATH . '/configs/acl.ini');
 
         foreach($aclConfig as $resourceName => $role)
         {

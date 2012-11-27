@@ -1,0 +1,54 @@
+[PRODUCTION]
+resources.frontController.moduleDirectory = APPLICATION_PATH "/application/modules"
+resources.frontController.defaultModule = "gallery"
+resources.frontController.baseUrl = '%%WEBSITE_BASE_URL%%'
+resources.frontController.throwExceptions = false
+resources.layout.layoutPath = APPLICATION_PATH "/application/views/layouts"
+resources.layout.layout = "default"
+resources.view.helperPath.Alchemy\View\Helper\ = APPLICATION_PATH "/application/views/helpers"
+resources.modules[] =
+
+bootstrap.path = APPLICATION_PATH "/library/Alchemy/Application/Bootstrap.php"
+bootstrap.class = "Alchemy\\Application\\Bootstrap"
+
+phpSettings.date.timezone = "Europe/Warsaw"
+phpSettings.display_errors = 0
+phpSettings.display_startup_errors = 0
+phpSettings.log_errors = 1
+
+includePaths.library = APPLICATION_PATH "/library"
+autoloaderNamespaces[] = "Alchemy"
+
+resources.db.adapter = "pdo_mysql"
+resources.db.params.adapterNamespace = "Zend_Db_Adapter"
+resources.db.params.host = "%%ALCHEMY_DB_HOST%%"
+resources.db.params.username = "%%ALCHEMY_DB_USER%%"
+resources.db.params.password = "%%ALCHEMY_DB_PASS%%"
+resources.db.params.dbname = "%%ALCHEMY_DB_NAME%%"
+resources.db.params.profiler.enabled = false
+resources.db.isDefaultAdapter = true
+
+auth.adapterClass = "Alchemy\\Auth\\Adapter\\DbTable";
+
+[TESTING : PRODUCTION]
+
+phpSettings.display_errors = 1
+phpSettings.display_startup_errors = 1
+phpSettings.log_errors = 0
+
+resources.db.adapter = "DbAdapter"
+resources.db.params.adapterNamespace = "Zend_Test"
+resources.db.params.host = "<unused>"
+resources.db.params.username = "<unused>"
+resources.db.params.password = "<unused>"
+resources.db.params.dbname = "<unused>"
+
+auth.adapterClass = "Alchemy\\Auth\\Adapter\\Test";
+
+[DEVELOPMENT : PRODUCTION]
+
+phpSettings.display_errors = 1
+phpSettings.display_startup_errors = 1
+phpSettings.log_errors = 1
+
+resources.db.params.profiler.enabled = true

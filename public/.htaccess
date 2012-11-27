@@ -1,0 +1,8 @@
+RewriteEngine on
+
+RewriteRule ^alchemy/(.*)$ $1
+
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule .* - [L]
+
+RewriteRule ^.*$ index.php [NC,L]
