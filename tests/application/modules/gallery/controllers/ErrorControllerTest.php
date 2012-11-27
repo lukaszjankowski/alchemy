@@ -26,7 +26,7 @@ class ErrorControllerTest extends ControllerTestCase
     public function testBacktraceShouldBeDisplayedInDevEnv()
     {
         $this->bootstrap = new Zend_Application('DEVELOPMENT',
-                WEBSITE_PATH . '/application/configs/application.ini');
+                WEBSITE_PATH . '/configs/application.ini');
         $this->bootstrap();
         $this->dispatch('/gallery/error/error500');
 
@@ -37,7 +37,7 @@ class ErrorControllerTest extends ControllerTestCase
     public function testBacktraceShouldNotBeDisplayedInProEnv()
     {
         $this->bootstrap = new Zend_Application('PRODUCTION',
-                WEBSITE_PATH . '/application/configs/application.ini');
+                WEBSITE_PATH . '/configs/application.ini');
         $this->bootstrap();
         $this->dispatch('/gallery/error/error500');
 

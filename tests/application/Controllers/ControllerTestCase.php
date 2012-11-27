@@ -9,7 +9,7 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
     public function setUp()
     {
         $this->bootstrap = new Zend_Application(APPLICATION_PROCEDURE,
-            WEBSITE_PATH . '/application/configs/application.ini');
+            WEBSITE_PATH . '/configs/application.ini');
 
         parent::setUp();
     }
