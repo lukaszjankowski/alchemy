@@ -1,6 +1,5 @@
 <?php
 namespace Alchemy\Controller\Plugin;
-
 class Acl extends \Zend_Controller_Plugin_Abstract
 {
     /**
@@ -13,21 +12,10 @@ class Acl extends \Zend_Controller_Plugin_Abstract
      */
     const ROLE_AUTHENTICATED = 'authenticated';
 
-    const RESULT_ACCESS_ALLOWED = 'allowed';
-
-    const RESULT_ACCESS_DENIED = 'denied';
-
     /**
      * @var    \Zend_Acl
      */
     private $acl;
-
-    /**
-     * ACL verification result
-     *
-     * @var    string
-     */
-    private $result;
 
     /**
      * @param \Zend_Acl $acl
@@ -35,7 +23,6 @@ class Acl extends \Zend_Controller_Plugin_Abstract
     public function __construct(\Zend_Acl $acl)
     {
         $this->acl = $acl;
-        $this->result = self::RESULT_ACCESS_DENIED;
     }
 
     /**
@@ -52,8 +39,7 @@ class Acl extends \Zend_Controller_Plugin_Abstract
      */
     private function getRole()
     {
-        $roleName = \Zend_Auth::getInstance()->hasIdentity() ? self::ROLE_AUTHENTICATED
-            : self::ROLE_GUEST;
+        $roleName = \Zend_Auth::getInstance()->hasIdentity() ? self::ROLE_AUTHENTICATED : self::ROLE_GUEST;
 
         return new \Zend_Acl_Role($roleName);
     }
@@ -67,7 +53,7 @@ class Acl extends \Zend_Controller_Plugin_Abstract
 
         if(!$this->acl->has($resource))
         {
-            return;
+            throw new \Zend_Acl_Exception('No ACL configuration for resource: ' . $resource);
         }
 
         if(!$this->acl->isAllowed($role, $resource))
@@ -75,8 +61,6 @@ class Acl extends \Zend_Controller_Plugin_Abstract
             $this->_request->setModuleName('admin')->setControllerName('auth')->setActionName('login');
             return;
         }
-
-        $this->result = self::RESULT_ACCESS_ALLOWED;
     }
 
     /**
@@ -87,14 +71,6 @@ class Acl extends \Zend_Controller_Plugin_Abstract
         $resourceName = $this->_request->getModuleName() . '_' . $this->_request->getControllerName();
 
         return new \Zend_Acl_Resource($resourceName);
-    }
-
-    /**
-     * @return    string
-     */
-    public function getResult()
-    {
-        return $this->result;
     }
 
 }

@@ -1,6 +1,5 @@
 <?php
 namespace Alchemy\Controller\Plugin;
-
 class AclTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -23,9 +22,7 @@ class AclTest extends \PHPUnit_Framework_TestCase
         $this->acl = new \Zend_Acl;
         $this->acl->deny();
         $this->acl->addRole(new \Zend_Acl_Role(Acl::ROLE_GUEST));
-        $this->acl
-            ->addRole(new \Zend_Acl_Role(Acl::ROLE_AUTHENTICATED),
-                Acl::ROLE_GUEST);
+        $this->acl->addRole(new \Zend_Acl_Role(Acl::ROLE_AUTHENTICATED), Acl::ROLE_GUEST);
 
         parent::setUp();
     }
@@ -36,9 +33,15 @@ class AclTest extends \PHPUnit_Framework_TestCase
         $plugin = new Acl($this->acl);
         $plugin->setRequest($this->request);
 
-        $plugin->preDispatch();
+        try
+        {
+            $plugin->preDispatch();
+            $this->fail('Expected exception but none was thrown');
+        }
+        catch(\Zend_Acl_Exception $e)
+        {
+        }
 
-        $this->assertEquals(Acl::RESULT_ACCESS_DENIED, $plugin->getResult());
         $this->assertSame($request, $plugin->getRequest());
     }
 
@@ -52,7 +55,6 @@ class AclTest extends \PHPUnit_Framework_TestCase
         $plugin->setRequest($this->request);
         $plugin->preDispatch();
 
-        $this->assertEquals(Acl::RESULT_ACCESS_DENIED, $plugin->getResult());
         $this->assertEquals('admin', $this->request->getModuleName());
         $this->assertEquals('auth', $this->request->getControllerName());
         $this->assertEquals('login', $this->request->getActionName());
@@ -68,7 +70,6 @@ class AclTest extends \PHPUnit_Framework_TestCase
         $plugin->setRequest($this->request);
         $plugin->preDispatch();
 
-        $this->assertEquals(Acl::RESULT_ACCESS_ALLOWED, $plugin->getResult());
         $this->assertSame($request, $this->request);
     }
 
