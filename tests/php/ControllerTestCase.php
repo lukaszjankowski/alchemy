@@ -58,4 +58,30 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
         $this->fail($msg);
     }
 
+    /**
+     * Assert response is correct JSON format
+     *
+     * @return void
+     */
+    protected function assertJsonResponse()
+    {
+        $this->assertNotRedirect();
+        $this->assertHeaderContains('Content-Type', 'application/json');
+        $body = $this->_response->getBody();
+
+        try
+        {
+            $decoded = Zend_Json_Decoder::decode($body);
+        }
+        catch(Zend_Json_Exception $e)
+        {
+            $this->fail('Failed asserting response is JSON format');
+        }
+
+        if(array('errors', 'result') != array_keys($decoded))
+        {
+            $this->fail('Failed asserting response is correct JSON format');
+        }
+    }
+
 }
