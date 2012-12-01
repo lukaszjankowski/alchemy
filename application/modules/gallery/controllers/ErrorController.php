@@ -4,6 +4,17 @@
  */
 class ErrorController extends Alchemy\Controller\Action
 {
+    public function init()
+    {
+        if('json' == $this->_helper->contextSwitch()->getCurrentContext())
+        {
+            $this->_helper->contextSwitch()->addActionContext('error',
+                array(
+                    'json'
+                ))->initContext('json');
+        }
+    }
+
     public function errorAction()
     {
         $errors = $this->_getParam('error_handler');

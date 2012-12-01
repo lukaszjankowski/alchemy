@@ -88,17 +88,18 @@ class AuthControllerTest extends ControllerTestCase
         Alchemy\ModelFacade::throwsExceptionAtEveryCall(true);
         $this->loginUser();
         $this->assertNotRedirect();
-        $this->assertQueryContentContains('div.actionMessage.error', 'An exception thrown because of self::$throwsExceptionAtEveryCall');
+        $this->assertQueryContentContains('div.actionMessage.error',
+            'An exception thrown because of self::$throwsExceptionAtEveryCall');
     }
 
     private function loginUser($username = 'lukasz', $password = 'qw12qw')
     {
-        $this->request->setMethod('POST')
-            ->setPost(
-                array(
-                    'username' => $username,
-                    'password' => $password
-                ));
+        $params = array(
+            'username' => $username,
+            'password' => $password
+        );
+
+        $this->request->setMethod('POST')->setPost($params);
         $this->dispatch('/admin/auth/login');
     }
 
