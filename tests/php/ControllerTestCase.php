@@ -39,7 +39,7 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
      * @param  string $message
      * @return void
      */
-    protected function assertHasFlashMessage($flashMessage, $message = '')
+    public function assertHasFlashMessage($flashMessage, $message = '')
     {
         $this->_incrementAssertionCount();
         $fm = Zend_Controller_Action_HelperBroker::getStaticHelper('flashMessenger');
@@ -63,7 +63,7 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
      *
      * @return void
      */
-    protected function assertJsonResponse()
+    public function assertJsonResponse()
     {
         $this->assertNotRedirect();
         $this->assertHeaderContains('Content-Type', 'application/json');
@@ -78,7 +78,7 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
             $this->fail('Failed asserting response is JSON format');
         }
 
-        if(array('errors', 'result') != array_keys($decoded))
+        if(array('error', 'result') != array_keys($decoded))
         {
             $this->fail('Failed asserting response is correct JSON format');
         }

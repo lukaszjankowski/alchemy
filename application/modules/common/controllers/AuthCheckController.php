@@ -4,10 +4,11 @@
  *
  * @author Łukasz Jankowski <mail@lukaszjankowski.info>
  */
-class Admin_AuthCheckController extends Alchemy\Controller\Action
+class Common_AuthCheckController extends Alchemy\Controller\Action
 {
     public function init()
     {
+        parent::init();
         $this->_helper->contextSwitch()->addActionContext('index', array(
             'json'
         ))->initContext('json');
