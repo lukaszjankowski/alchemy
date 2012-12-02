@@ -65,9 +65,4 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
         \Zend_Registry::set('authAdapter', $adapter);
     }
 
-    protected function _initPlugins()
-    {
-        \Zend_Controller_Action_HelperBroker::addPrefix('Alchemy\\Controller\\Helper');
-    }
-
 }

@@ -3,6 +3,7 @@ resources.frontController.moduleDirectory = APPLICATION_PATH "/application/modul
 resources.frontController.defaultModule = "gallery"
 resources.frontController.baseUrl = '%%WEBSITE_BASE_URL%%'
 resources.frontController.throwExceptions = false
+resources.frontController.actionHelperPaths.Alchemy\Controller\Helper = APPLICATION_PATH "/library/Alchemy/Controller/Helper"
 resources.layout.layoutPath = APPLICATION_PATH "/application/views/layouts"
 resources.layout.layout = "default"
 resources.view.helperPath.Alchemy\View\Helper\ = APPLICATION_PATH "/application/views/helpers"
