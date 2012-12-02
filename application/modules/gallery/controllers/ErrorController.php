@@ -46,7 +46,12 @@ class ErrorController extends Alchemy\Controller\Action
 
     public function error500Action()
     {
-        throw new Zend_Controller_Action_Exception('Test exception');
+        throw new Zend_Controller_Action_Exception('Internal server error');
+    }
+
+    public function error404Action()
+    {
+        throw new Zend_Controller_Action_Exception('Page not found', 404);
     }
 
 }
