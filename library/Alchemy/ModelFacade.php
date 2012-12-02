@@ -1,7 +1,6 @@
 <?php
 namespace Alchemy;
-
-use Alchemy\Model\Exception;
+use \Alchemy\Model\Exception as ModelException;
 
 abstract class ModelFacade
 {
@@ -62,14 +61,14 @@ abstract class ModelFacade
     {
         if(!method_exists($this->model, $method))
         {
-            throw new Exception("Unknown method '" . $this->getModelName() . "::$method()'");
+            throw new ModelException("Unknown method '" . $this->getModelName() . "::$method()'");
         }
 
         try
         {
             if(self::$throwsExceptionAtEveryCall)
             {
-                throw new Exception('An exception thrown because of self::$throwsExceptionAtEveryCall');
+                throw new ModelException('An exception thrown because of self::$throwsExceptionAtEveryCall');
             }
 
             $response = call_user_func_array(
@@ -80,7 +79,7 @@ abstract class ModelFacade
             $this->setResult($response);
             return true;
         }
-        catch(Exception $e)
+        catch(ModelException $e)
         {
             $this->errorHelper($e);
             return false;
@@ -88,9 +87,9 @@ abstract class ModelFacade
     }
 
     /**
-     * @param    Exception $e
+     * @param    ModelException $e
      */
-    private function errorHelper(Exception $e)
+    private function errorHelper(ModelException $e)
     {
         $this->errors[] = array(
             'message' => $e->getMessage()
