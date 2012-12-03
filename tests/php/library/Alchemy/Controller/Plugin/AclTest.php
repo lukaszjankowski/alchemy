@@ -33,16 +33,11 @@ class AclTest extends \PHPUnit_Framework_TestCase
         $plugin = new Acl($this->acl);
         $plugin->setRequest($this->request);
 
-        try
-        {
-            $plugin->preDispatch();
-            $this->fail('Expected exception but none was thrown');
-        }
-        catch(\Zend_Acl_Exception $e)
-        {
-        }
+        $plugin->preDispatch();
 
-        $this->assertSame($request, $plugin->getRequest());
+        $this->assertEquals('gallery', $this->request->getModuleName());
+        $this->assertEquals('error', $this->request->getControllerName());
+        $this->assertEquals('error404', $this->request->getActionName());
     }
 
     public function testShouldDenyAccessForWrongRole()
@@ -70,7 +65,9 @@ class AclTest extends \PHPUnit_Framework_TestCase
         $plugin->setRequest($this->request);
         $plugin->preDispatch();
 
-        $this->assertSame($request, $this->request);
+        $this->assertEquals('admin', $this->request->getModuleName());
+        $this->assertEquals('index', $this->request->getControllerName());
+        $this->assertEquals('index', $this->request->getActionName());
     }
 
 }

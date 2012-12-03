@@ -8,11 +8,8 @@ class ErrorControllerTest extends ControllerTestCase
         $this->assertModule('gallery');
         $this->assertController('error');
         $this->assertAction('error');
-        $this->assertResponseCode(500);
-        $this->assertQueryContentContains('body', 'No ACL configuration for resource: gallery_foo');
-// temporarily commented out
-//         $this->assertResponseCode(404);
-//         $this->assertQueryContentContains('h2', 'Page not found');
+        $this->assertResponseCode(404);
+        $this->assertQueryContentContains('h2', 'Page not found');
     }
 
     public function testInvalidModuleShouldRaiseError500()

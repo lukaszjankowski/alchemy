@@ -53,7 +53,11 @@ class Acl extends \Zend_Controller_Plugin_Abstract
 
         if(!$this->acl->has($resource))
         {
-            throw new \Zend_Acl_Exception('No ACL configuration for resource: ' . $resource);
+            $errModule = 'gallery';
+            $errController = 'error';
+            $errAction = 'error404';
+            $this->_request->setModuleName($errModule)->setControllerName($errController)->setActionName($errAction);
+            return;
         }
 
         if(!$this->acl->isAllowed($role, $resource))
