@@ -12,6 +12,7 @@ set_include_path(
                 array(
                     '%%LIBRARY_ZF_DIR%%',
                     '%%APPLICATION_PATH%%',
+                    '%%APPLICATION_PATH%%/library',
                 ), explode(PATH_SEPARATOR, get_include_path())))));
 
 require_once '%%APPLICATION_PATH%%/configs/constants.php';

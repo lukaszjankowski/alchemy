@@ -1,6 +1,5 @@
 <?php
 namespace Alchemy\Auth\Adapter;
-
 /**
  * An auth adapter for tests purposes
  */

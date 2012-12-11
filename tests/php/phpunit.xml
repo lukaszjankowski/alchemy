@@ -19,4 +19,8 @@
             lowUpperBound="50" highLowerBound="80" />
     </logging>
 
+    <listeners>
+        <listener class="Lagged_Test_PHPUnit_ControllerTestCase_Listener" file="Lagged/Test/PHPUnit/ControllerTestCase/Listener.php" />
+    </listeners>
+    
 </phpunit>

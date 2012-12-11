@@ -12,6 +12,7 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
         $this->bootstrap = new Zend_Application(APPLICATION_PROCEDURE, $this->appConfig);
 
         parent::setUp();
+        Alchemy\ModelFacade::throwsExceptionAtEveryCall(false);
     }
 
     public function tearDown()
@@ -61,7 +62,7 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
     /**
      * Assert response is correct JSON format
      *
-     * @return void
+     * @return stdClass
      */
     public function assertJsonResponse()
     {
@@ -71,17 +72,19 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
 
         try
         {
-            $decoded = Zend_Json_Decoder::decode($body);
+            $decoded = Zend_Json_Decoder::decode($body, $objectDecodeType = Zend_Json::TYPE_OBJECT);
         }
         catch(Zend_Json_Exception $e)
         {
-            $this->fail('Failed asserting response is JSON format');
+            $this->fail('Failed asserting response format is JSON');
         }
 
-        if(array('error', 'result') != array_keys($decoded))
+        if(array('error', 'result') != array_keys(get_object_vars($decoded)))
         {
             $this->fail('Failed asserting response is correct JSON format');
         }
+
+        return $decoded;
     }
 
 }

@@ -1,6 +1,5 @@
 <?php
 namespace Alchemy\Form;
-
 /**
  * Formularz logowania
  *
@@ -10,11 +9,14 @@ namespace Alchemy\Form;
  */
 class LoginForm extends \Zend_Form
 {
+    const PARAM_USERNAME = 'username';
+    const PARAM_PASSWORD = 'password';
+
     public function init()
     {
         $this->setMethod('post')->setAttrib('id', 'loginForm');
 
-        $username = $this->createElement('text', 'username');
+        $username = $this->createElement('text', self::PARAM_USERNAME);
         $username->setLabel('Username: ')->setRequired(true)->addFilter('StringToLower')->addFilter('StringTrim')
             ->addValidators(
                 array(
@@ -28,7 +30,7 @@ class LoginForm extends \Zend_Form
                         )
                     )
                 ));
-        $password = $this->createElement('password', 'password');
+        $password = $this->createElement('password', self::PARAM_PASSWORD);
         $password->setLabel('Password: ')->setRequired(true)
             ->addValidators(
                 array(

@@ -1,10 +1,14 @@
 <?php
 namespace Alchemy\Model;
-
 use Alchemy\Model;
 
 class User extends Model
 {
+    /**
+     * @param string $username
+     * @param string $password
+     * @return boolean
+     */
     public function login($username, $password)
     {
         $adapter = \Zend_Registry::get('authAdapter');
@@ -21,6 +25,16 @@ class User extends Model
         }
 
         return false;
+    }
+
+    /**
+     * @param string $username
+     * @param string $password
+     * @return boolean
+     */
+    public function checkAuth($username, $password)
+    {
+        return $this->login($username, $password);
     }
 
 }

@@ -1,6 +1,5 @@
 <?php
 namespace Alchemy\Auth\Adapter;
-
 class DbTable extends \Zend_Auth_Adapter_DbTable
 {
     /**

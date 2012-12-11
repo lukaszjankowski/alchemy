@@ -1,4 +1,7 @@
 <?php
+use Alchemy\Form\LoginForm;
+use Alchemy\Auth\Adapter\Test as AdapterTest;
+
 class AuthControllerTest extends ControllerTestCase
 {
     public function testAdminModuleRequiresAthenticatedUser()
@@ -26,16 +29,15 @@ class AuthControllerTest extends ControllerTestCase
         $this->assertQueryContentContains('form', 'Username:');
 
         $this->resetRequest()->resetResponse();
-        $this->loginUser($username = 'lukasz', $password = 'qw12qw');
-
+        $this->loginUser(AdapterTest::DEFAULT_USERNAME, AdapterTest::DEFAULT_PASSWORD);
         $this->assertRedirectTo($this->getRequest()->getBaseUrl() . '/admin/index');
 
         $this->resetRequest()->resetResponse();
         $this->dispatch('/admin/index');
         $this->assertHasFlashMessage('Successful login');
-        $this->assertQueryContentRegex('h5', '/Zalogowany:.*\s+' . $username . '/');
+        $this->assertQueryContentRegex('h5', '/Zalogowany:.*\s+' . AdapterTest::DEFAULT_USERNAME . '/');
         $this->assertTrue(Zend_Auth::getInstance()->hasIdentity());
-        $this->assertEquals($username, Zend_Auth::getInstance()->getIdentity());
+        $this->assertEquals(AdapterTest::DEFAULT_USERNAME, Zend_Auth::getInstance()->getIdentity());
 
         $this->resetRequest()->resetResponse();
         $this->dispatch('/admin/auth/login');
@@ -58,7 +60,7 @@ class AuthControllerTest extends ControllerTestCase
 
     public function testUserLoginWithWrongCredentials()
     {
-        $this->loginUser($username = 'lukasz', $password = 'bogus123');
+        $this->loginUser(AdapterTest::DEFAULT_USERNAME, $password = 'bogus123');
         $this->assertNotRedirect();
         $this->assertQueryContentContains('form', 'Username:');
         $this->assertQueryContentContains('div.actionMessage.error', 'Authentication failed');
@@ -88,15 +90,16 @@ class AuthControllerTest extends ControllerTestCase
         Alchemy\ModelFacade::throwsExceptionAtEveryCall(true);
         $this->loginUser();
         $this->assertNotRedirect();
-        $this->assertQueryContentContains('div.actionMessage.error',
-            'An exception thrown because of self::$throwsExceptionAtEveryCall');
+        $this
+            ->assertQueryContentContains('div.actionMessage.error',
+                'An exception thrown because of self::$throwsExceptionAtEveryCall');
     }
 
-    private function loginUser($username = 'lukasz', $password = 'qw12qw')
+    private function loginUser($username = AdapterTest::DEFAULT_USERNAME, $password = AdapterTest::DEFAULT_PASSWORD)
     {
         $params = array(
-            'username' => $username,
-            'password' => $password
+            LoginForm::PARAM_USERNAME => $username,
+            LoginForm::PARAM_PASSWORD => $password
         );
 
         $this->request->setMethod('POST')->setPost($params);
