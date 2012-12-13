@@ -12,7 +12,6 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
         $this->bootstrap = new Zend_Application(APPLICATION_PROCEDURE, $this->appConfig);
 
         parent::setUp();
-        Alchemy\ModelFacade::throwsExceptionAtEveryCall(false);
     }
 
     public function tearDown()

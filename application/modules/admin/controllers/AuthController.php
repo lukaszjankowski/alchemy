@@ -39,7 +39,7 @@ class Admin_AuthController extends Alchemy\Controller\Action
         $model = $this->getModel('User');
         if(false === $model->login($username, $password))
         {
-            $this->setModelErrors($model->getErrors());
+            $this->setModelErrors($model->getError());
             return;
         }
 

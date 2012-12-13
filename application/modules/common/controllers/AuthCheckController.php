@@ -46,7 +46,7 @@ class Common_AuthCheckController extends Alchemy\Controller\Action
 
         if(false === $model->checkAuth($username, $password))
         {
-            $this->setModelErrors($model->getErrors());
+            $this->setModelErrors($model->getError());
             return false;
         }
 

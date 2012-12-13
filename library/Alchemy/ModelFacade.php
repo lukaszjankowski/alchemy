@@ -7,36 +7,47 @@ abstract class ModelFacade
     /**
      * Name of related model
      *
-     * @var		\Alchemy\Model
+     * @var \Alchemy\Model
      */
     protected $model;
 
     /**
      * Service result
      *
-     * @var		mixed
+     * @var mixed
      */
     private $result;
 
     /**
-     * Should every service invocation throw an exception? E.g. for testing purposes
-     *
-     * @var    boolean
-     */
-    private static $throwsExceptionAtEveryCall = false;
-
-    /**
      * Errors from model
      *
-     * @var    array
+     * @var array
      */
-    private $errors = array();
+    private $error = array();
 
-    public function __construct()
+    /**
+     * @return \Alchemy\Model
+     */
+    public function getModel()
     {
-        $className = 'Alchemy\\Model\\' . $this->getModelName();
+        if(!is_null($this->model))
+        {
+            return $this->model;
+        }
+
+        $className = '\\Alchemy\\Model\\' . $this->getModelName();
         \Zend_Loader::loadClass($className);
         $this->model = new $className;
+
+        return $this->model;
+    }
+
+    /**
+     * @param \Alchemy\Model $model
+     */
+    public function setModel(\Alchemy\Model $model)
+    {
+        $this->model = $model;
     }
 
     protected function setResult($result)
@@ -44,36 +55,32 @@ abstract class ModelFacade
         $this->result = $result;
     }
 
+    /**
+     * @return mixed
+     */
     public function getResult()
     {
         return $this->result;
     }
 
     /**
-     * @param    boolean $flag
+     * @param string $method
+     * @param array $args
+     * @throws ModelException
+     * @return boolean
      */
-    public static function throwsExceptionAtEveryCall($flag)
+    public function __call($method, array $args = array())
     {
-        self::$throwsExceptionAtEveryCall = $flag;
-    }
-
-    public function __call($method, $args = array())
-    {
-        if(!method_exists($this->model, $method))
+        if(!method_exists($this->getModel(), $method))
         {
             throw new ModelException("Unknown method '" . $this->getModelName() . "::$method()'");
         }
 
         try
         {
-            if(self::$throwsExceptionAtEveryCall)
-            {
-                throw new ModelException('An exception thrown because of self::$throwsExceptionAtEveryCall');
-            }
-
             $response = call_user_func_array(
                 array(
-                    $this->model,
+                    $this->getModel(),
                     $method
                 ), $args);
             $this->setResult($response);
@@ -87,27 +94,27 @@ abstract class ModelFacade
     }
 
     /**
-     * @param    ModelException $e
+     * @param ModelException $e
      */
     private function errorHelper(ModelException $e)
     {
-        $this->errors[] = array(
+        $this->error = array(
             'message' => $e->getMessage()
         );
     }
 
     /**
-     * @return    array
+     * @return array
      */
-    public function getErrors()
+    public function getError()
     {
-        return $this->errors;
+        return $this->error;
     }
 
     /**
      * Return name of related model
      *
-     * @return	string
+     * @return string
      */
     abstract protected function getModelName();
 
