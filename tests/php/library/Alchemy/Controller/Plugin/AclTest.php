@@ -1,5 +1,7 @@
 <?php
-namespace Alchemy\Controller\Plugin;
+namespace AlchemyTest\Controller\Plugin;
+use Alchemy\Controller\Plugin\Acl;
+
 class AclTest extends \PHPUnit_Framework_TestCase
 {
     /**
