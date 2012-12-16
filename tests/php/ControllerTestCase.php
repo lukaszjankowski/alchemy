@@ -1,6 +1,7 @@
 <?php
 require_once 'Zend/Application.php';
 require_once 'Zend/Test/PHPUnit/ControllerTestCase.php';
+use \Alchemy\Model\Factory as ModelFactory;
 
 abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
 {

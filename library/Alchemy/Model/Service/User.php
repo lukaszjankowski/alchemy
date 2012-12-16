@@ -1,5 +1,5 @@
 <?php
-namespace Alchemy\Model;
+namespace Alchemy\Model\Service;
 use Alchemy\Model;
 
 class User extends Model

@@ -4,14 +4,14 @@
  *
  * @author Łukasz Jankowski <mail@lukaszjankowski.info>
  */
-namespace AlchemyTest\ModelFacade;
-use \Alchemy\ModelFacade\User as Facade;
+namespace AlchemyTest\Model\Facade;
+use \Alchemy\Model\Facade;
 use \Alchemy\Model\Exception as Exception;
 
-class UserTest extends \PHPUnit_Framework_TestCase
+class ModelFacadeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Alchemy\ModelFacade\User
+     * @var \Alchemy\ModelFacade
      */
     private $facade;
 
@@ -22,24 +22,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->facade = new Facade;
-    }
-
-    private function setModel()
-    {
-        $this->model = $this->getMock('Alchemy\\Model\\User');
-        $this->facade->setModel($this->model);
-    }
-
-    public function testCreatesNewModel()
-    {
-        $this->assertInstanceOf('Alchemy\\Model\\User', $this->facade->getModel());
-    }
-
-    public function testWillNotCreateNewModelIfAlreadyExists()
-    {
-        $this->setModel();
-        $this->assertSame($this->facade->getModel(), $this->model);
+        $this->model = $this->getMock('\\Alchemy\\Model\\Service\\User');
+        $this->facade = new Facade($this->model);
     }
 
     public function testThrowsExceptionWhenUnexistingModelMethodCalled()
@@ -64,7 +48,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     public function testCallsModelMethodWithArgsAndReturnsResult()
     {
-        $this->setModel();
         $username = 'foo';
         $password = 'bar';
         $result = true;
@@ -77,7 +60,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnsErrorWhenModelThrowsException()
     {
-        $this->setModel();
         $username = 'foo';
         $password = 'bar';
         $this->model->expects($this->once())->method('login')

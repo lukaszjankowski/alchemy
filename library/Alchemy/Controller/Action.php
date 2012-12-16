@@ -1,6 +1,8 @@
 <?php
 namespace Alchemy\Controller;
 use \Zend_Controller_Action_Helper_ContextSwitch as ContextSwitch;
+use \Alchemy\Model\Factory;
+
 abstract class Action extends \Zend_Controller_Action implements Report
 {
     protected function _redirect($url, array $options = array())
@@ -10,19 +12,16 @@ abstract class Action extends \Zend_Controller_Action implements Report
     }
 
     /**
-     * @param	string $modelName
-     * @return	Alchemy\ModelFacade
+     * @param string $modelName
+     * @return \Alchemy\ModelFacade
      */
     public function getModel($modelName)
     {
-        $className = "Alchemy\\ModelFacade\\$modelName";
-        \Zend_Loader::loadClass($className);
-
-        return new $className;
+        return Factory::getInstance()->getModel($modelName);
     }
 
     /**
-     * @param    array $errors
+     * @param array $errors
      */
     public function setModelErrors(array $errors)
     {
@@ -41,11 +40,12 @@ abstract class Action extends \Zend_Controller_Action implements Report
      */
     public function init()
     {
-        $this->_helper->contextSwitch()->setCallback('json', ContextSwitch::TRIGGER_POST,
-            array(
-                $this->_helper->jsonContext(),
-                'postJsonContext'
-            ));
+        $this->_helper->contextSwitch()
+            ->setCallback('json', ContextSwitch::TRIGGER_POST,
+                array(
+                    $this->_helper->jsonContext(),
+                    'postJsonContext'
+                ));
     }
 
 }

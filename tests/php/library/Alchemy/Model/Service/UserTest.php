@@ -4,8 +4,8 @@
  *
  * @author Łukasz Jankowski <mail@lukaszjankowski.info>
  */
-namespace AlchemyTest\Model;
-use Alchemy\Model\User as UserModel;
+namespace AlchemyTest\Model\Service\User;
+use Alchemy\Model\Service\User as UserModel;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
