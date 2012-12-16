@@ -11,6 +11,7 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
     {
         $this->appConfig = WEBSITE_PATH . '../configsGenerated/application.ini';
         $this->bootstrap = new Zend_Application(APPLICATION_PROCEDURE, $this->appConfig);
+        ModelFactory::getInstance()->reset();
 
         parent::setUp();
     }
@@ -79,12 +80,26 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
             $this->fail('Failed asserting response format is JSON');
         }
 
-        if(array('error', 'result') != array_keys(get_object_vars($decoded)))
+        if(array(
+            'error',
+            'result'
+        ) != array_keys(get_object_vars($decoded)))
         {
             $this->fail('Failed asserting response is correct JSON format');
         }
 
         return $decoded;
+    }
+
+    protected function forceErrorFromModel($modelName)
+    {
+        $nullModel = ModelFactory::getInstance()->getModel('Error');
+        ModelFactory::getInstance()->setModel($modelName, $nullModel);
+    }
+
+    public function assertForcedErrorFromModel()
+    {
+        $this->assertQueryContentContains('div.actionMessage.error', 'A model exception was thrown');
     }
 
 }

@@ -47,14 +47,13 @@ class Common_AuthCheckControllerTest extends ControllerTestCase
 
     public function testReturnsResultNotOkOnModelError()
     {
-        $this->markTestSkipped();
+        $this->forceErrorFromModel('User');
         $this->_request->setMethod('POST')->setPost($this->correctAuthData);
 
         $this->dispatch('/common/authCheck');
 
         $expected = Common_AuthCheckController::RESULT_NOT_OK;
-        $actual = $this->assertJsonResponse()->result->result;
-        $this->assertEquals($expected, $actual);
+        $this->assertJsonResponse()->result->result;
     }
 
 }

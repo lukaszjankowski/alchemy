@@ -1,5 +1,7 @@
 <?php
 namespace AlchemyTest\Model;
+use Alchemy\Model\Facade;
+
 use \Alchemy\Model\Factory;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
@@ -19,6 +21,15 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
         $second = Factory::getInstance()->getModel('User');
         $this->assertSame($first, $second);
+    }
+
+    public function testResetsModelInstances()
+    {
+        $first = Factory::getInstance()->getModel('User');
+        $this->assertInstanceOf('\\Alchemy\\Model\\Facade', $first);
+        Factory::getInstance()->reset();
+        $second = Factory::getInstance()->getModel('User');
+        $this->assertNotSame($first, $second);
     }
 
     public function testReturnsSameModelAsSetManually()

@@ -87,13 +87,10 @@ class AuthControllerTest extends ControllerTestCase
 
     public function testModelReturnsError()
     {
-        $this->markTestSkipped();
-
+        $this->forceErrorFromModel('User');
         $this->loginUser();
         $this->assertNotRedirect();
-        $this
-            ->assertQueryContentContains('div.actionMessage.error',
-                'An exception thrown because of self::$throwsExceptionAtEveryCall');
+        $this->assertForcedErrorFromModel();
     }
 
     private function loginUser($username = AdapterTest::DEFAULT_USERNAME, $password = AdapterTest::DEFAULT_PASSWORD)

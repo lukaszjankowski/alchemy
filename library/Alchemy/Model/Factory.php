@@ -46,7 +46,6 @@ class Factory
         }
 
         $className = '\\Alchemy\\Model\\Service\\' . $modelName;
-        \Zend_Loader::loadClass($className);
         $facade = new Facade(new $className);
         $this->models[$modelName] = $facade;
 
@@ -60,6 +59,11 @@ class Factory
     public function setModel($modelName, Facade $model)
     {
         $this->models[$modelName] = $model;
+    }
+
+    public function reset()
+    {
+        $this->models = array();
     }
 
 }

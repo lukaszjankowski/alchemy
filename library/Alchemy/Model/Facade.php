@@ -61,16 +61,10 @@ class Facade
     /**
      * @param string $method
      * @param array $args
-     * @throws ModelException
      * @return boolean
      */
     public function __call($method, array $args = array())
     {
-        if(!method_exists($this->model, $method))
-        {
-            throw new ModelException("Unknown method '" . get_class($this->model) . "::$method()'");
-        }
-
         try
         {
             $response = call_user_func_array(

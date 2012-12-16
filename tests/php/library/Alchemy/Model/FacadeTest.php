@@ -26,20 +26,6 @@ class ModelFacadeTest extends \PHPUnit_Framework_TestCase
         $this->facade = new Facade($this->model);
     }
 
-    public function testThrowsExceptionWhenUnexistingModelMethodCalled()
-    {
-        try
-        {
-            $this->facade->foo();
-            $this->fail('Expected to throw an exception');
-        }
-        catch(\Exception $e)
-        {
-            $this->assertInstanceOf('Exception', $e);
-            $this->assertContains('Unknown method', $e->getMessage());
-        }
-    }
-
     public function testErrorsAndResultAreInitiallyEmpty()
     {
         $this->assertEquals(null, $this->facade->getResult());

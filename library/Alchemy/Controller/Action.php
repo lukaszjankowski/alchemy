@@ -25,10 +25,7 @@ abstract class Action extends \Zend_Controller_Action implements Report
      */
     public function setModelErrors(array $errors)
     {
-        foreach($errors as $error)
-        {
-            $this->_helper->report->addMessage($error['message'], self::REPORT_ERROR);
-        }
+        $this->_helper->report->addMessage($errors['message'], self::REPORT_ERROR);
     }
 
     /**
