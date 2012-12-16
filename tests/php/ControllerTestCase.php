@@ -99,7 +99,7 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
 
     public function assertForcedErrorFromModel()
     {
-        $this->assertQueryContentContains('div.actionMessage.error', 'A model exception was thrown');
+        $this->assertQueryContentContains('*', 'A model exception was thrown');
     }
 
 }

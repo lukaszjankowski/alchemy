@@ -42,11 +42,11 @@ class JsonContext extends \Zend_Controller_Action_Helper_Abstract
             if(method_exists($view, 'getVars'))
             {
                 $response = null;
-                $exception = null;
+                $exceptionMessage = null;
 
                 if($this->getResponse()->isException())
                 {
-                    $exception = $view->message;
+                    $exceptionMessage = $view->message . ' : ' . $view->exception->getMessage();
                 }
                 else
                 {
@@ -54,7 +54,7 @@ class JsonContext extends \Zend_Controller_Action_Helper_Abstract
                 }
 
                 $body = array(
-                    'error' => $exception,
+                    'error' => $exceptionMessage,
                     'result' => $response
                 );
 

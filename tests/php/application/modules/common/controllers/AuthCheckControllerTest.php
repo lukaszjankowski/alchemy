@@ -51,9 +51,7 @@ class Common_AuthCheckControllerTest extends ControllerTestCase
         $this->_request->setMethod('POST')->setPost($this->correctAuthData);
 
         $this->dispatch('/common/authCheck');
-
-        $expected = Common_AuthCheckController::RESULT_NOT_OK;
-        $this->assertJsonResponse()->result->result;
+        $this->assertForcedErrorFromModel();
     }
 
 }

@@ -2,9 +2,15 @@
 namespace Alchemy\Controller;
 use \Zend_Controller_Action_Helper_ContextSwitch as ContextSwitch;
 use \Alchemy\Model\Factory;
+use \Alchemy\Exception;
 
 abstract class Action extends \Zend_Controller_Action implements Report
 {
+    /**
+     * Overriden to avoid exits
+     *
+     * @see Zend_Controller_Action::_redirect()
+     */
     protected function _redirect($url, array $options = array())
     {
         $options['exit'] = false;
@@ -21,11 +27,24 @@ abstract class Action extends \Zend_Controller_Action implements Report
     }
 
     /**
-     * @param array $errors
+     * @param array $error
      */
-    public function setModelErrors(array $errors)
+    public function setModelError(array $error)
     {
-        $this->_helper->report->addMessage($errors['message'], self::REPORT_ERROR);
+        if($this->isJsonContext())
+        {
+            throw new Exception($error['message']);
+        }
+
+        $this->_helper->report->addMessage($error['message'], self::REPORT_ERROR);
+    }
+
+    /**
+     * @return boolean
+     */
+    private function isJsonContext()
+    {
+        return 'json' == $this->_helper->contextSwitch->getCurrentContext();
     }
 
     /**
