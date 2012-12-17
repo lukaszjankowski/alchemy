@@ -41,8 +41,8 @@ class Common_AuthCheckController extends Alchemy\Controller\Action
     private function checkCredentials()
     {
         $model = $this->getModel('User');
-        $username = $this->_request->getPost('username');
-        $password = $this->_request->getPost('password');
+        $username = $this->_request->getPost(LoginForm::PARAM_USERNAME);
+        $password = $this->_request->getPost(LoginForm::PARAM_PASSWORD);
 
         if(false === $model->checkAuth($username, $password))
         {

@@ -5,7 +5,7 @@ var model = (function() {
     
     function update(params) {
         alchemy.ajax({
-            url : '/admin/authcheck',
+            url : '/common/authCheck',
             data : {
                 username : params.username,
                 password : params.password
@@ -35,7 +35,7 @@ var model = (function() {
     }
 
     function successHandler(response) {
-        alert(response);
+        //alert(response);
     }
     
     return {

@@ -18,12 +18,17 @@ var controller = (function() {
         if (this.view) {
             var loginInput = this.view.find('input#username');
             var userName = loginInput.val();
+            var passwordInput = this.view.find('input#password');
+            var password = passwordInput.val();
 
-            if (!userName) {
+            if (!userName || !password) {
                 return;
             }
 
-            this.notifyObservers('submitForm', userName);
+            this.notifyObservers('submitForm', {
+                'username' : userName,
+                'password' : password
+            });
         }
     }
 
