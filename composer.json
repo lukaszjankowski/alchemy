@@ -5,12 +5,12 @@
     "keywords": [
         "alchemy",
         "zend framework",
-        "Łukasz Jankowski"
+        "Lukasz Jankowski"
     ],
     "homepage": "https://github.com/lukaszjankowski/alchemy",
     "authors": [
         {
-            "name": "Lukasz Jankowski"
+            "name": "Łukasz Jankowski"
         }
     ],
     "license": "GPL-3.0+",
