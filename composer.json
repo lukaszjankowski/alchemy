@@ -1,0 +1,28 @@
+{
+    "name": "lukaszjankowski/alchemy",
+    "description": "Zend Framework 1 based sample application",
+    "type": "library",
+    "keywords": [
+        "alchemy",
+        "zend framework",
+        "lukasz jankowski"
+    ],
+    "homepage": "https://github.com/lukaszjankowski/alchemy",
+    "authors": [
+        {
+            "name": "Łukasz Jankowski"
+        }
+    ],
+    "license": "GPL-3.0+",
+    "require": {
+        "php": ">=5.3.9"
+    },
+    "autoload": {
+        "psr-0": {
+            "Alchemy\\": "library/"
+        }
+    },
+    "require-dev": {
+        "phpunit/PHPUnit": "3.7.11"
+    }
+}
