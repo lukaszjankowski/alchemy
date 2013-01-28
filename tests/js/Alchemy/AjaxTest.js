@@ -78,8 +78,8 @@ test('sends request with default params overriden', function() {
 
 module('response tests', {
     setup : function() {
-      setup.call(this);
-      this.clock = sinon.useFakeTimers();
+        setup.call(this);
+        this.clock = sinon.useFakeTimers();
     },
     teardown : function() {
         this.clock.restore();

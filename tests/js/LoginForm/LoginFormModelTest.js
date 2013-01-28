@@ -1,7 +1,8 @@
 (function() {
     function setup() {
         this.model = alchemy.loginForm.model;
-        this.view = $('<form><input type="text" name="username" id="username" value="" /></form>');
+        this.view = $('<form><input type="text" name="username" id="username" value="" />'
+            + '<input type="text" name="password" id="password" value="" /></form>');
         this.model.setView(this.view);
         this.server = sinon.fakeServer.create();
         this.server.respondWith([
@@ -9,7 +10,7 @@
             {
                 "Content-Type" : "application/json"
             },
-            '{"ok" : "OK"}'
+            '{"error" : "", "result" : { "result" : { "ok" : "OK"} } }'
         ]);
         this.successCallback = sinon.spy();
         this.completeCallback = sinon.spy();
@@ -39,46 +40,55 @@
     });
 
     test('calling checkLoginData adds preloader, blocks form and then does reverse on complete', function() {
-        this.model.update(this.params);
+        this.model.update({});
 
         ok(this.view.hasClass('ajax-loading'));
         ok(formIsBlocked(this.view));
-        
+
         this.server.respond();
-        
+
         ok(!this.view.hasClass('ajax-loading'));
-        ok(formIsNotBlocked(this.view));
+        ok(!formIsBlocked(this.view));
     });
-    
+
     function formIsBlocked(form) {
         var isBlocked = true;
         form.find('input').each(function(index, input) {
-            if(isBlocked && !$(input).is(':disabled')) {
+            if (isBlocked && !$(input).is(':disabled')) {
                 isBlocked = false;
             }
         });
-        
+
         return isBlocked;
     }
 
-    function formIsNotBlocked(form) {
-        var isNotBlocked = true;
-        form.find('input').each(function(index, input) {
-            if(isNotBlocked && $(input).is(':disabled')) {
-                isNotBlocked = false;
-            }
+    test('validation error is set in view when invalid credentials provided and removed' + ' when correct provided',
+        function() {
+            this.server.respondWith([
+                200,
+                {
+                    "Content-Type" : "application/json"
+                },
+                '{"error" : "", "result" : { "result" : "RESULT_NOT_OK" } }'
+            ]);
+
+            this.model.update({});
+            this.server.respond();
+
+            equal(this.view.find('span.validationError').size(), 1);
+
+            this.server.respondWith([
+                200,
+                {
+                    "Content-Type" : "application/json"
+                },
+                '{"error" : "", "result" : { "result" : "RESULT_OK" } }'
+            ]);
+
+            this.model.update({});
+            this.server.respond();
+
+            equal(this.view.find('span.validationError').size(), 0);
         });
-        
-        return isNotBlocked;
-    }
-    
-    // var params = {
-    // url : '/foo',
-    // data : {
-    // userName : 'user',
-    // password : 'pass'
-    // }
-    // };
-    // params = $.extend(true, {}, this.params);
 
 }());

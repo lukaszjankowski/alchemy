@@ -14,7 +14,6 @@ var controller = (function() {
 
     function handleSubmit(e) {
         e.preventDefault();
-
         if (this.view) {
             var loginInput = this.view.find('input#username');
             var userName = loginInput.val();
@@ -25,10 +24,11 @@ var controller = (function() {
                 return;
             }
 
-            this.notifyObservers('submitForm', {
+            var params = {
                 'username' : userName,
                 'password' : password
-            });
+            };
+            this.notifyObservers('submitForm', params);
         }
     }
 
