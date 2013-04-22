@@ -14,16 +14,19 @@ class Common_AuthCheckController extends Alchemy\Controller\Action
     public function init()
     {
         parent::init();
-        $this->_helper->contextSwitch()->addActionContext('index', array(
+        $this->_helper->contextSwitch()->addActionContext(
+            'index',
+            array(
                 'json'
-            ))->initContext('json');
+            )
+        )->initContext('json');
     }
 
     public function indexAction()
     {
-        if(!$this->validateParameters() || !$this->checkCredentials())
-        {
+        if (!$this->validateParameters() || !$this->checkCredentials()) {
             $this->view->result = self::RESULT_NOT_OK;
+
             return;
         }
 
@@ -44,18 +47,16 @@ class Common_AuthCheckController extends Alchemy\Controller\Action
         $username = $this->_request->getPost(LoginForm::PARAM_USERNAME);
         $password = $this->_request->getPost(LoginForm::PARAM_PASSWORD);
 
-        if(false === $model->checkAuth($username, $password))
-        {
+        if (false === $model->checkAuth($username, $password)) {
             $this->setModelError($model->getError());
+
             return false;
         }
 
-        if(false === $model->getResult())
-        {
+        if (false === $model->getResult()) {
             return false;
         }
 
         return true;
     }
-
 }

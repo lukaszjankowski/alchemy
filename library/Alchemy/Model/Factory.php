@@ -1,5 +1,6 @@
 <?php
 namespace Alchemy\Model;
+
 class Factory
 {
     /**
@@ -25,23 +26,22 @@ class Factory
      */
     public static function getInstance()
     {
-        if(!is_null(self::$instance))
-        {
+        if (!is_null(self::$instance)) {
             return self::$instance;
         }
 
         self::$instance = new self;
+
         return self::$instance;
     }
 
     /**
-     * @param string $modelName
+     * @param  string                $modelName
      * @return \Alchemy\Model\Facade
      */
     public function getModel($modelName)
     {
-        if(isset($this->models[$modelName]))
-        {
+        if (isset($this->models[$modelName])) {
             return $this->models[$modelName];
         }
 
@@ -65,5 +65,4 @@ class Factory
     {
         $this->models = array();
     }
-
 }

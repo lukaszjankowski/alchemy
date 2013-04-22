@@ -5,6 +5,7 @@
  * @author Łukasz Jankowski <mail@lukaszjankowski.info>
  */
 namespace AlchemyTest\Model\Service\User;
+
 use Alchemy\Model\Service\User as UserModel;
 
 class UserTest extends \PHPUnit_Framework_TestCase
@@ -37,5 +38,4 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($actual);
     }
-
 }

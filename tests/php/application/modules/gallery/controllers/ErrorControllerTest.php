@@ -42,5 +42,4 @@ class ErrorControllerTest extends ControllerTestCase
         $this->assertNotQueryContentContains('h3', 'Exception information:');
         $this->assertNotQueryContentContains('h3', 'Stack trace:');
     }
-
 }

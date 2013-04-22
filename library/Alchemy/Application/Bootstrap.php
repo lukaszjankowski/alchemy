@@ -1,5 +1,7 @@
 <?php
+// @codingStandardsIgnoreFile
 namespace Alchemy\Application;
+
 use Alchemy\Controller\Plugin\Acl;
 
 class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
@@ -22,14 +24,16 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
         $resources = $this->getOption('resources');
         $dbConfig = $resources['db'];
 
-        $db = \Zend_Db::factory($dbConfig['adapter'],
+        $db = \Zend_Db::factory(
+            $dbConfig['adapter'],
             array(
                 'host' => $dbConfig['params']['host'],
                 'username' => $dbConfig['params']['username'],
                 'password' => $dbConfig['params']['password'],
                 'dbname' => $dbConfig['params']['dbname'],
                 'adapterNamespace' => $dbConfig['params']['adapterNamespace']
-            ));
+            )
+        );
 
         \Zend_Db_Table::setDefaultAdapter($db);
     }
@@ -46,8 +50,7 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
 
         $aclConfig = new \Zend_Config_Ini(APPLICATION_PATH . '/configs/acl.ini');
 
-        foreach($aclConfig as $resourceName => $role)
-        {
+        foreach ($aclConfig as $resourceName => $role) {
             $acl->addResource($resourceName);
             $acl->allow($role, $resourceName);
         }
@@ -64,5 +67,4 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
 
         \Zend_Registry::set('authAdapter', $adapter);
     }
-
 }

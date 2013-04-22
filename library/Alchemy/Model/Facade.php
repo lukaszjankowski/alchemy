@@ -1,5 +1,6 @@
 <?php
 namespace Alchemy\Model;
+
 use \Alchemy\Model\Exception as ModelException;
 
 class Facade
@@ -34,7 +35,7 @@ class Facade
     }
 
     /**
-     * @param string $modelName
+     * @param  string         $modelName
      * @return \Alchemy\Model
      */
     public function getModel($modelName)
@@ -59,25 +60,26 @@ class Facade
     }
 
     /**
-     * @param string $method
-     * @param array $args
+     * @param  string  $method
+     * @param  array   $args
      * @return boolean
      */
     public function __call($method, array $args = array())
     {
-        try
-        {
+        try {
             $response = call_user_func_array(
                 array(
                     $this->model,
                     $method
-                ), $args);
+                ),
+                $args
+            );
             $this->setResult($response);
+
             return true;
-        }
-        catch(ModelException $e)
-        {
+        } catch (ModelException $e) {
             $this->errorHelper($e);
+
             return false;
         }
     }
@@ -99,5 +101,4 @@ class Facade
     {
         return $this->error;
     }
-
 }

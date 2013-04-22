@@ -1,7 +1,7 @@
 <?php
 namespace AlchemyTest\Model;
-use Alchemy\Model\Facade;
 
+use Alchemy\Model\Facade;
 use \Alchemy\Model\Factory;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
@@ -40,5 +40,4 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $actual = Factory::getInstance()->getModel('User');
         $this->assertSame($expected, $actual);
     }
-
 }

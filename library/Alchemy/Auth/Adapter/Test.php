@@ -1,5 +1,6 @@
 <?php
 namespace Alchemy\Auth\Adapter;
+
 /**
  * An auth adapter for tests purposes
  */
@@ -9,28 +10,34 @@ class Test implements \Zend_Auth_Adapter_Interface
     const DEFAULT_PASSWORD = 'qw12qw';
 
     /**
-     * $_identity - Identity value
+     * $identity - Identity value
      *
      * @var string
      */
-    protected $_identity = null;
+    protected $identity = null;
 
     /**
-     * $_credential - Credential values
+     * $credential - Credential values
      *
      * @var string
      */
-    protected $_credential = null;
+    protected $credential = null;
+
+    /**
+     * @var array
+     */
+    private $authenticateResultInfo = array();
 
     /**
      * setIdentity() - set the value to be used as the identity
      *
-     * @param  string $value
+     * @param  string                     $value
      * @return \Zend_Auth_Adapter_DbTable Provides a fluent interface
      */
     public function setIdentity($value)
     {
-        $this->_identity = $value;
+        $this->identity = $value;
+
         return $this;
     }
 
@@ -38,54 +45,50 @@ class Test implements \Zend_Auth_Adapter_Interface
      * setCredential() - set the credential value to be used, optionally can specify a treatment
      * to be used, should be supplied in parameterized form, such as 'MD5(?)' or 'PASSWORD(?)'
      *
-     * @param  string $credential
+     * @param  string                     $credential
      * @return \Zend_Auth_Adapter_DbTable Provides a fluent interface
      */
     public function setCredential($credential)
     {
-        $this->_credential = $credential;
+        $this->credential = $credential;
+
         return $this;
     }
 
     public function authenticate()
     {
-        $this->_authenticateSetup();
-        if(empty($this->_identity) || empty($this->_credential))
-        {
+        $this->authenticateSetup();
+        if (empty($this->identity) || empty($this->credential)) {
             throw new \Zend_Auth_Adapter_Exception('');
         }
 
-        if($this->_identity != self::DEFAULT_USERNAME || $this->_credential != self::DEFAULT_PASSWORD)
-        {
-            return new \Zend_Auth_Result(\Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID, $this->_identity);
+        if ($this->identity != self::DEFAULT_USERNAME || $this->credential != self::DEFAULT_PASSWORD) {
+            return new \Zend_Auth_Result(\Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID, $this->identity);
         }
 
-        return new \Zend_Auth_Result(\Zend_Auth_Result::SUCCESS, $this->_identity);
+        return new \Zend_Auth_Result(\Zend_Auth_Result::SUCCESS, $this->identity);
     }
 
     /**
-     * _authenticateSetup() - This method abstracts the steps involved with
+     * authenticateSetup() - This method abstracts the steps involved with
      * making sure that this adapter was indeed setup properly with all
      * required pieces of information.
      *
      * @throws \Zend_Auth_Adapter_Exception - in the event that setup was not done properly
      * @return true
      */
-    protected function _authenticateSetup()
+    protected function authenticateSetup()
     {
         $exception = null;
 
-        if($this->_identity == '')
-        {
-            $exception = 'A value for the identity was not provided prior to authentication with \Zend_Auth_Adapter_DbTable.';
-        }
-        elseif($this->_credential === null)
-        {
+        if ($this->identity == '') {
+            $exception = 'A value for the identity was not provided prior'
+                . ' to authentication with \Zend_Auth_Adapter_DbTable.';
+        } elseif ($this->credential === null) {
             $exception = 'A credential value was not provided prior to authentication with \Zend_Auth_Adapter_DbTable.';
         }
 
-        if(null !== $exception)
-        {
+        if (null !== $exception) {
             /**
              * @see \Zend_Auth_Adapter_Exception
              */
@@ -93,13 +96,20 @@ class Test implements \Zend_Auth_Adapter_Interface
             throw new \Zend_Auth_Adapter_Exception($exception);
         }
 
-        $this->_authenticateResultInfo = array(
+        $this->authenticateResultInfo = array(
             'code' => \Zend_Auth_Result::FAILURE,
-            'identity' => $this->_identity,
+            'identity' => $this->identity,
             'messages' => array()
         );
 
         return true;
     }
 
+    /**
+     * @return array
+     */
+    public function getAuthenticateResultInfo()
+    {
+        return $this->authenticateResultInfo;
+    }
 }

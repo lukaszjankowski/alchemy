@@ -5,6 +5,7 @@
  * @author Łukasz Jankowski <mail@lukaszjankowski.info>
  */
 namespace AlchemyTest\Model\Facade;
+
 use \Alchemy\Model\Facade;
 use \Alchemy\Model\Exception as Exception;
 
@@ -53,9 +54,11 @@ class ModelFacadeTest extends \PHPUnit_Framework_TestCase
 
         $this->facade->login($username, $password);
         $this->assertEquals(null, $this->facade->getResult());
-        $this->assertEquals(array(
+        $this->assertEquals(
+            array(
                 'message' => 'exception message'
-            ), $this->facade->getError());
+            ),
+            $this->facade->getError()
+        );
     }
-
 }

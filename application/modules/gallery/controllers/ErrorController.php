@@ -6,12 +6,13 @@ class ErrorController extends Alchemy\Controller\Action
 {
     public function init()
     {
-        if('json' == $this->_helper->contextSwitch()->getCurrentContext())
-        {
-            $this->_helper->contextSwitch()->addActionContext('error',
+        if ('json' == $this->_helper->contextSwitch()->getCurrentContext()) {
+            $this->_helper->contextSwitch()->addActionContext(
+                'error',
                 array(
                     'json'
-                ))->initContext('json');
+                )
+            )->initContext('json');
         }
     }
 
@@ -19,17 +20,16 @@ class ErrorController extends Alchemy\Controller\Action
     {
         $errors = $this->_getParam('error_handler');
 
-        switch($errors->type)
-        {
-            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE :
-            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER :
-            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION :
-            // 404 error -- controller or action not found
+        switch ($errors->type) {
+            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
+            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
+            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
+                // 404 error -- controller or action not found
                 $this->getResponse()->setHttpResponseCode(404);
                 $this->view->message = 'Page not found';
                 break;
-            default :
-            // application error
+            default:
+                // application error
                 $this->getResponse()->setHttpResponseCode(500);
                 $this->getResponse()->setHeader('Cache-Control', 'no-cache, no-store, max-age: 0', true);
                 $this->getResponse()->setHeader('Pragma', 'no-cache', true);
@@ -53,5 +53,4 @@ class ErrorController extends Alchemy\Controller\Action
     {
         throw new Zend_Controller_Action_Exception('Page not found', 404);
     }
-
 }

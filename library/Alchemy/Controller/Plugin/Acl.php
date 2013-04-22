@@ -1,5 +1,6 @@
 <?php
 namespace Alchemy\Controller\Plugin;
+
 class Acl extends \Zend_Controller_Plugin_Abstract
 {
     /**
@@ -35,7 +36,7 @@ class Acl extends \Zend_Controller_Plugin_Abstract
     }
 
     /**
-     * @return    \Zend_Acl_Role
+     * @return \Zend_Acl_Role
      */
     private function getRole()
     {
@@ -51,24 +52,24 @@ class Acl extends \Zend_Controller_Plugin_Abstract
     {
         $resource = $this->getResource();
 
-        if(!$this->acl->has($resource))
-        {
+        if (!$this->acl->has($resource)) {
             $errModule = 'gallery';
             $errController = 'error';
             $errAction = 'error404';
             $this->_request->setModuleName($errModule)->setControllerName($errController)->setActionName($errAction);
+
             return;
         }
 
-        if(!$this->acl->isAllowed($role, $resource))
-        {
+        if (!$this->acl->isAllowed($role, $resource)) {
             $this->_request->setModuleName('admin')->setControllerName('auth')->setActionName('login');
+
             return;
         }
     }
 
     /**
-     * @return    \Zend_Acl_Resource
+     * @return \Zend_Acl_Resource
      */
     private function getResource()
     {
@@ -76,5 +77,4 @@ class Acl extends \Zend_Controller_Plugin_Abstract
 
         return new \Zend_Acl_Resource($resourceName);
     }
-
 }

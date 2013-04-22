@@ -1,5 +1,6 @@
 <?php
 namespace Alchemy\Model\DbTable;
+
 class Users extends \Zend_Db_Table
 {
     /**
@@ -11,5 +12,4 @@ class Users extends \Zend_Db_Table
      * Primary key
      */
     protected $_primary = 'user_id';
-
 }

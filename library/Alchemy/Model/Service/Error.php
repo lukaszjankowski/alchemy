@@ -5,8 +5,8 @@
  * @author Łukasz Jankowski <mail@lukaszjankowski.info>
  */
 namespace Alchemy\Model\Service;
-use Alchemy\Model\Exception;
 
+use Alchemy\Model\Exception;
 use \Alchemy\Model;
 
 class Error extends Model
@@ -15,5 +15,4 @@ class Error extends Model
     {
         throw new Exception('A model exception was thrown from ' . __CLASS__);
     }
-
 }

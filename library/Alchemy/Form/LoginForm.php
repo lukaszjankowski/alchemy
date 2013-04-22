@@ -1,5 +1,6 @@
 <?php
 namespace Alchemy\Form;
+
 /**
  * Formularz logowania
  *
@@ -29,7 +30,8 @@ class LoginForm extends \Zend_Form
                             20
                         )
                     )
-                ));
+                )
+            );
         $password = $this->createElement('password', self::PARAM_PASSWORD);
         $password->setLabel('Password: ')->setRequired(true)
             ->addValidators(
@@ -43,7 +45,8 @@ class LoginForm extends \Zend_Form
                             20
                         )
                     )
-                ));
+                )
+            );
         $submit = $this->createElement('submit', 'Login');
         $submit->setLabel('Login')->setIgnore(true);
         $this
@@ -52,7 +55,8 @@ class LoginForm extends \Zend_Form
                     $username,
                     $password,
                     $submit
-                ));
+                )
+            );
         $this
             ->setDecorators(
                 array(
@@ -64,6 +68,7 @@ class LoginForm extends \Zend_Form
                         )
                     ),
                     'Form'
-                ));
+                )
+            );
     }
 }

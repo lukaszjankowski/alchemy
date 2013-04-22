@@ -1,6 +1,4 @@
 <?php
-require_once 'Zend/Application.php';
-require_once 'Zend/Test/PHPUnit/ControllerTestCase.php';
 use \Alchemy\Model\Factory as ModelFactory;
 
 abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
@@ -45,16 +43,13 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
     {
         $this->_incrementAssertionCount();
         $fm = Zend_Controller_Action_HelperBroker::getStaticHelper('flashMessenger');
-        foreach($fm->getCurrentMessages() as $msgArray)
-        {
-            if($msgArray['txt'] == $flashMessage)
-            {
+        foreach ($fm->getCurrentMessages() as $msgArray) {
+            if ($msgArray['txt'] == $flashMessage) {
                 return;
             }
         }
         $msg = sprintf('Failed asserting FlashMessanger has set message <"%s">', $flashMessage);
-        if(!empty($message))
-        {
+        if (!empty($message)) {
             $msg = $message . "\n" . $msg;
         }
         $this->fail($msg);
@@ -71,21 +66,16 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
         $this->assertHeaderContains('Content-Type', 'application/json');
         $body = $this->_response->getBody();
 
-        try
-        {
+        try {
             $decoded = Zend_Json_Decoder::decode($body, $objectDecodeType = Zend_Json::TYPE_OBJECT);
-        }
-        catch(Zend_Json_Exception $e)
-        {
+        } catch (Zend_Json_Exception $e) {
             $this->fail('Failed asserting response format is JSON');
         }
 
-        if(is_object($decoded)
-            && array(
+        if (is_object($decoded) && array(
                 'error',
                 'result'
-            ) != array_keys(get_object_vars($decoded)))
-        {
+            ) != array_keys(get_object_vars($decoded))) {
             $this->fail('Failed asserting response is correct JSON format');
         }
 
@@ -102,5 +92,4 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
     {
         $this->assertQueryContentContains('*', 'A model exception was thrown');
     }
-
 }

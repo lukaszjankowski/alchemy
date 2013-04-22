@@ -1,5 +1,6 @@
 <?php
 namespace Alchemy\Model\Service;
+
 use Alchemy\Model;
 
 class User extends Model
@@ -15,8 +16,8 @@ class User extends Model
     private $auth;
 
     /**
-     * @param string $username
-     * @param string $password
+     * @param  string  $username
+     * @param  string  $password
      * @return boolean
      */
     public function login($username, $password)
@@ -32,8 +33,8 @@ class User extends Model
     }
 
     /**
-     * @param string $username
-     * @param string $password
+     * @param  string  $username
+     * @param  string  $password
      * @return boolean
      */
     public function checkAuth($username, $password)
@@ -54,8 +55,7 @@ class User extends Model
      */
     private function getAuthAdapter()
     {
-        if(!is_null($this->authAdapter))
-        {
+        if (!is_null($this->authAdapter)) {
             return $this->authAdapter;
         }
 
@@ -75,12 +75,10 @@ class User extends Model
      */
     private function getAuth()
     {
-        if(!is_null($this->auth))
-        {
+        if (!is_null($this->auth)) {
             return $this->auth;
         }
 
         return \Zend_Auth::getInstance();
     }
-
 }

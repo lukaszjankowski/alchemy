@@ -8,5 +8,4 @@ namespace Alchemy;
 
 class Exception extends \Exception
 {
-
 }

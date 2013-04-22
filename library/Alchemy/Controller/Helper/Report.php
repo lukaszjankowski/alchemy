@@ -15,13 +15,11 @@ class Report extends \Zend_Controller_Action_Helper_Abstract
 
     private function saveMessagesIfRedirect()
     {
-        if(!$this->getResponse()->isRedirect())
-        {
+        if (!$this->getResponse()->isRedirect()) {
             return;
         }
 
-        if(!$messages = $this->_actionController->view->actionMessages)
-        {
+        if (!$messages = $this->_actionController->view->actionMessages) {
             return;
         }
 
@@ -33,12 +31,9 @@ class Report extends \Zend_Controller_Action_Helper_Abstract
         $flashMessanger = \Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
         $messages = $flashMessanger->getMessages();
 
-        if($this->getResponse()->isRedirect())
-        {
+        if ($this->getResponse()->isRedirect()) {
             \Zend_Controller_Action_HelperBroker::getStaticHelper('report')->addFlashMessages($messages);
-        }
-        else
-        {
+        } else {
             $this->_actionController->view->actionMessages = is_array($messages) ? $messages : array();
         }
     }
@@ -52,7 +47,7 @@ class Report extends \Zend_Controller_Action_Helper_Abstract
      * Set report message
      *
      * @param	string message
-     * @param	integer $reportType
+     * @param integer $reportType
      */
     public function addMessage($message, $messageType, $isFlashMessage = false)
     {
@@ -61,11 +56,13 @@ class Report extends \Zend_Controller_Action_Helper_Abstract
             'type' => $messageType
         );
 
-        if($isFlashMessage)
-        {
-            $this->addFlashMessages(array(
+        if ($isFlashMessage) {
+            $this->addFlashMessages(
+                array(
                     $messageArray
-                ));
+                )
+            );
+
             return;
         }
 
@@ -75,14 +72,12 @@ class Report extends \Zend_Controller_Action_Helper_Abstract
     }
 
     /**
-     * @param    array $messages
+     * @param array $messages
      */
     public function addFlashMessages(array $messages)
     {
-        foreach($messages as $message)
-        {
+        foreach ($messages as $message) {
             \Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger')->addMessage($message);
         }
     }
-
 }

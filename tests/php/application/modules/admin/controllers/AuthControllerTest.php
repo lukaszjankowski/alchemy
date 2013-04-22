@@ -103,5 +103,4 @@ class AuthControllerTest extends ControllerTestCase
         $this->request->setMethod('POST')->setPost($params);
         $this->dispatch('/admin/auth/login');
     }
-
 }

@@ -53,5 +53,4 @@ class Common_AuthCheckControllerTest extends ControllerTestCase
         $this->dispatch('/common/authCheck');
         $this->assertForcedErrorFromModel();
     }
-
 }
