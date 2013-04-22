@@ -80,10 +80,11 @@ abstract class ControllerTestCase extends Zend_Test_PHPUnit_ControllerTestCase
             $this->fail('Failed asserting response format is JSON');
         }
 
-        if(array(
-            'error',
-            'result'
-        ) != array_keys(get_object_vars($decoded)))
+        if(is_object($decoded)
+            && array(
+                'error',
+                'result'
+            ) != array_keys(get_object_vars($decoded)))
         {
             $this->fail('Failed asserting response is correct JSON format');
         }
