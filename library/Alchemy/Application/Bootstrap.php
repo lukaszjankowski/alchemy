@@ -1,5 +1,4 @@
 <?php
-// @codingStandardsIgnoreFile
 namespace Alchemy\Application;
 
 use Alchemy\Controller\Plugin\Acl;

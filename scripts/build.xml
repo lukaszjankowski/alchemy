@@ -47,7 +47,7 @@
     <target name="unit-tests" description="Run unit tests">
         <delete dir="test-reports" />
         <mkdir dir="test-reports" />
-        <exec command="phpunit --configuration ${application.path}/tests/php/phpunit.xml" passthru="true" />
+        <exec command="phpunit --configuration ${application.path}/tests/php/phpunit.xml" passthru="true" checkreturn="true" />
     </target>
 
     <target name="php-lint" description="Check php syntax">
@@ -60,7 +60,7 @@
     </target>
 
     <target name="php-cs" description="Run PHP_Codesniffer code analysis">
-        <exec command="phpcs -p -s --report=summary --standard=PSR2 --extensions=php --ignore=*.js,*.css,vendor/ ${application.path}"
+        <exec command="phpcs -p -s --report=summary --standard=${application.path}/library/PHP_Codesniffer/ruleset.xml --extensions=php --ignore=*.js,*.css,vendor/ ${application.path}"
             passthru="true" />
     </target>
 
