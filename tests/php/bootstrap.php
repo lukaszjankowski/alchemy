@@ -1,6 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../configs/constants.php';
-define('APPLICATION_PROCEDURE', APPLICATION_PROCEDURE_TESTING);
+require_once 'testConfig.php';
 require_once dirname(__FILE__) . '/../../../configsGenerated/config.php';
 
 require_once 'Zend/Loader/Autoloader.php';
