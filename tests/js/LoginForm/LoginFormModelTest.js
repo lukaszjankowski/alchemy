@@ -62,7 +62,7 @@
         return isBlocked;
     }
 
-    test('validation error is set in view when invalid credentials provided and removed' + ' when correct provided',
+    test('validation error is set in view when invalid credentials provided and removed when correct provided',
         function() {
             this.server.respondWith([
                 200,
@@ -71,6 +71,8 @@
                 },
                 '{"error" : "", "result" : { "result" : "RESULT_NOT_OK" } }'
             ]);
+
+            this.view.prepend('<span class="validationError">setting previous error, should be kept or deleted</span>');
 
             this.model.update({});
             this.server.respond();

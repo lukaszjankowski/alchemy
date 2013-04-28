@@ -49,10 +49,14 @@ var model = (function() {
     }
 
     function toggleLoginError(flag) {
-        if(flag) {
-            view.prepend('<span class="validationError">Incorrect username or password</span>');
-        } else {
-            view.find('span.validationError').remove();
+        var previousError = view.find('span.validationError');
+        var hasPreviousError = previousError.size() > 0;
+
+        if(flag && !hasPreviousError) {
+            var error = '<span class="validationError">Incorrect username or password</span>';
+            view.prepend(error);
+        } else if(!flag && hasPreviousError) {
+            previousError.remove();
         }
     }
 
