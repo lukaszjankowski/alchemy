@@ -8,7 +8,7 @@
 
     <target name="help">
         <echo>Existing tasks:</echo>
-        <echo> build - run all build tasks</echo>
+        <echo> qa - run all QA tasks</echo>
         <echo> reload-config - reload application configuration files</echo>
         <echo> php-lint - check php syntax</echo>
         <echo> unit-tests - run application unit tests</echo>
@@ -64,8 +64,7 @@
             passthru="true" />
     </target>
 
-    <target name="build" description="Run build tasks">
-        <phingcall target="reload-config" />
+    <target name="qa" description="Run all QA tasks">
         <phingcall target="php-lint" />
         <phingcall target="unit-tests" />
         <phingcall target="php-cs" />
