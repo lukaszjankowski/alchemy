@@ -9,9 +9,9 @@
     <target name="help">
         <echo>Existing tasks:</echo>
         <echo> qa - run all QA tasks</echo>
-        <echo> reload-config - reload application configuration files</echo>
+        <echo> reload-config - reload configuration files</echo>
         <echo> php-lint - check php syntax</echo>
-        <echo> unit-tests - run application unit tests</echo>
+        <echo> php-tests - run PHP unit tests</echo>
         <echo> php-cs - run PHP_Codesniffer code analysis</echo>
     </target>
 
@@ -44,7 +44,7 @@
         </copy>
     </target>
 
-    <target name="unit-tests" description="Run unit tests">
+    <target name="php-tests" description="Run unit tests">
         <delete dir="test-reports" />
         <mkdir dir="test-reports" />
         <exec command="phpunit --configuration ${application.path}/tests/php/phpunit.xml" passthru="true" checkreturn="true" />
@@ -66,7 +66,7 @@
 
     <target name="qa" description="Run all QA tasks">
         <phingcall target="php-lint" />
-        <phingcall target="unit-tests" />
+        <phingcall target="php-tests" />
         <phingcall target="php-cs" />
     </target>
 
