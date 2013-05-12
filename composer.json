@@ -16,7 +16,8 @@
     "license": "GPL-3.0+",
     "require": {
         "php": ">=5.3.9",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "zendframework/zendframework1": "1.12.*"
     },
     "autoload": {
         "psr-0": {
@@ -25,6 +26,10 @@
     },
     "require-dev": {
         "phpunit/PHPUnit": "3.7.*",
-        "phing/phing": "2.4.*"
+        "phing/phing": "2.5.*",
+        "squizlabs/php_codesniffer": "1.4.*",
+        "sebastian/finder-facade": "dev-master",
+        "theseer/fdomdocument": "dev-master",
+        "sebastian/phpcpd": "1.4.*"
     }
 }
