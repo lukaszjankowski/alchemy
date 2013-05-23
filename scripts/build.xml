@@ -13,6 +13,7 @@
         <echo> php-lint - check php syntax</echo>
         <echo> php-tests - run PHP unit tests</echo>
         <echo> php-cs - run PHP_Codesniffer code analysis</echo>
+        <echo> php-pmd - Run PHP PMD code analysis</echo>
     </target>
 
     <!-- Declare website configurable files -->
@@ -62,6 +63,12 @@
     <target name="php-cs" description="Run PHP_Codesniffer code analysis">
         <exec command="phpcs -p -s --report=summary --standard=${application.path}/library/PHP_Codesniffer/ruleset.xml --extensions=php --ignore=*.js,*.css,vendor/ ${application.path}"
             passthru="true" />
+    </target>
+
+    <target name="php-pmd" description="Run PHP PMD code analysis">
+        <phpmd rulesets="codesize,controversial,design,naming,unusedcode">
+            <fileset dir="${application.path}/library/" />
+        </phpmd>
     </target>
 
     <target name="qa" description="Run all QA tasks">
