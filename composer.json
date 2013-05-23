@@ -30,6 +30,7 @@
         "squizlabs/php_codesniffer": "1.4.*",
         "sebastian/finder-facade": "dev-master",
         "theseer/fdomdocument": "dev-master",
-        "sebastian/phpcpd": "1.4.*"
+        "sebastian/phpcpd": "1.4.*",
+        "phpmd/phpmd": "1.4.*"
     }
 }
