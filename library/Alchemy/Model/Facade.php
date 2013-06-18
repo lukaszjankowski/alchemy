@@ -35,10 +35,9 @@ class Facade
     }
 
     /**
-     * @param  string         $modelName
      * @return \Alchemy\Model
      */
-    public function getModel($modelName)
+    public function getModel()
     {
         return $this->model;
     }
