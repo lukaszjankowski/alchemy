@@ -57,7 +57,8 @@ class JsonContext extends \Zend_Controller_Action_Helper_Abstract
             } else {
                 require_once 'Zend/Controller/Action/Exception.php';
                 throw new \Zend_Controller_Action_Exception(
-                    'View does not implement the getVars() method needed to encode the view into JSON');
+                    'View does not implement the getVars() method needed to encode the view into JSON'
+                );
             }
         }
     }
