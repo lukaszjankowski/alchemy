@@ -5,6 +5,7 @@ use \Zend_Controller_Action_Helper_ContextSwitch as ContextSwitch;
 use \Alchemy\Model\Factory;
 use \Alchemy\Exception;
 
+// test
 abstract class Action extends \Zend_Controller_Action implements Report
 {
     /**
