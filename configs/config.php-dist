@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+error_reporting(E_ALL ^ E_STRICT);
 ini_set('error_log', '%%WEBSITE_LOG_DIR%%/' . date('Y-m-d') . '-php-error.log');
 
 define('APPLICATION_PATH', '%%APPLICATION_PATH%%');
